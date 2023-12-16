@@ -1,3 +1,6 @@
+import json
+import urllib
+
 import numpy as np
 import random
 
@@ -157,4 +160,25 @@ def rule_based_combination(candidates,rule='bestP_lowV'):
             return candidates[0]
     if rule=='random':
         return random.choice(candidates)
+
+
+def rl_based_combination(position, handcards, card_play_action_seq, mainface, fstplay, ranks):
+    params = {
+        'position': 0,  # 当前出牌玩家座位号，从0号开始计
+        'handcards': [],  # 当前玩家手牌
+        'card_play_action_seq': [],  # 所有玩家出牌历史，内容细节下问具体说明
+        'mainface': 0,  # 当局打的级牌
+        'fstplay': 1,  # 是否为主动发牌 0 表示压牌 1 主动发牌
+        'ranks': [],  # 已经走科的玩家座位号集合，按照走科顺序排列
+    }
+
+    data = {
+        'params': json.dumps(params)
+    }
+
+    ret = urllib.request.urlopen('http://123.249.41.116:8080/ai/guandan/action/il',
+                                 urllib.parse.urlencode(data).encode(), 5, context=None).read().strip()
+
+    return ret
+
 

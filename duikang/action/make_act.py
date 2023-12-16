@@ -69,6 +69,7 @@ class GuandanLLM():
 
         arbitrary_types_allowed = True
 
+    # 先拆牌 逢人配 算牌力 评估主助攻  记牌
 
     def make_act(self, observation: str, opponent_name: str, player_index: int, teammate_name: int, valid_action_list: List,
                  verbose_print: bool, game_idx: int, round: int, bot_short_memory: List, bot_long_memory: List, console,
